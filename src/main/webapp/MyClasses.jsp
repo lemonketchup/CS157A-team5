@@ -14,7 +14,16 @@ pageEncoding="UTF-8"%>
 <h1><%=session.getAttribute("login") %></h1>
 <h2>id: <%=session.getAttribute("id") %>
 
+<table border='1'>
+<tr>
+<th>abbreviation</th>
+<th>mode</th>
+<th>location</th>
+<th>time</th>
+<th>name</th>
 
+
+</tr>
 
 <%
 
@@ -44,16 +53,27 @@ while(rs.next()){
 
 }
 //this statment take class info
-out.println("</br>"+"&nbsp&nbsp mode:  &nbsp"+"&nbsp location: &nbsp"+"&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp     time    &nbsp&nbsp"+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   course_name    &nbsp"+"</br>");
 
 Statement stContent = con.createStatement();
-String sInfo = "SELECT mode_of_instruction,location, time, course_name From student_portal.classes join student_portal.is using(class_id) join student_portal.catalogue_courses using(course_abbreviation)where class_id in (select class_id from student_portal.register where user_id = '"+id+"'); ";
+String sInfo = "SELECT course_abbreviation,mode_of_instruction,location, time, course_name From student_portal.classes join student_portal.is using(class_id) join student_portal.catalogue_courses using(course_abbreviation)where class_id in (select class_id from student_portal.register where user_id = '"+id+"'); ";
 ResultSet rsInfo =  stContent.executeQuery(sInfo);
 while(rsInfo.next())
 {
+%>
+<tr>
+<th><%=rsInfo.getString(1)%>  </th>
+<th><%=rsInfo.getString(2)%>  </th>
+<th><%=rsInfo.getString(3)%>  </th>
+<th><%=rsInfo.getString(4)%>  </th>
+<th><%=rsInfo.getString(5)%>  </th>
+</tr>
 
 
-out.println("</br>"+"&nbsp"+rsInfo.getString(1) +"&nbsp"+"&nbsp"+ rsInfo.getString(2)+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+ rsInfo.getString(3)+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+rsInfo.getString(4) );
+
+
+<%
+
+
 
 }
 //test id obtain method
@@ -84,6 +104,16 @@ out.println("SQLException caught: " +e.getMessage()); }
 %>
 
 
+</table>
+<form action='studentHome.jsp' style='margin-top: 100px'>
+
+<input style = 'color:blue;width:100px' value=' back ' type='submit' onclick = "window.location.href='studentHome.jsp"/> 
+</form>
+
+<form action='studentHome.jsp' style='margin-top: 100px'>
+
+<input style = 'color:blue;width:100px' value=' back ' type='submit' onclick = "window.location.href='studentHome.jsp"/> 
+</form>
 
 
 </body>

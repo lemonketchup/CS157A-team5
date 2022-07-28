@@ -85,12 +85,12 @@ if(targetClass!= null && !targetClass.isBlank())
 				// add a student to classes table
 				String addSql = "INSERT INTO `student_portal`.`register` ( `user_id`, `class_id`) VALUES ( '"+id+"', '"+targetClass+"');";
 				//modifiy the enrollment number after add;
-				/* enrollment++;
+				 enrollment++;
 				String enAdd="update student_portal.classes set enrollment = '"+Integer.toString(enrollment)+"' where class_id= '"+targetClass+"';";
 				
 				stmt = con.createStatement();
 				stmt.executeUpdate(enAdd); 
-				*/
+				
 				stmt = con.createStatement();
 				stmt.executeUpdate(addSql); 
 				out.println("</br></br>"+"you added a class please check it");
@@ -153,6 +153,10 @@ out.println("SQLException caught: " +e.getMessage()); }
 
 %>
 
+<form action='studentHome.jsp' style='margin-top: 100px'>
+
+<input style = 'color:blue;width:100px' value=' back ' type='submit' onclick = "window.location.href='studentHome.jsp"/> 
+</form>
 
 
 
