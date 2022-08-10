@@ -3,15 +3,14 @@ pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %> 
 
 
-<%-- need redirect here? --%>
 
 <%
 String db = "student_portal";
 String user = "root"; // assumes database name is the same as username
 try
 {
-	Class.forName("com.mysql.cj.jdbc.Driver"); //load driver
-	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db + "?autoReconnect=true&useSSL=false", "", "");
+    Class.forName("com.mysql.cj.jdbc.Driver"); //load driver
+    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+db, "root", "970630");
 	
 	  if(request.getParameter("btn_login") != null){ //check login button click event not null
 	        String username = request.getParameter("username");

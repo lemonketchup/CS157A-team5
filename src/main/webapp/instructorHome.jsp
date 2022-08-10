@@ -46,6 +46,7 @@
 				
 				return false;
 			}
+			return true;
 		}
 		
 		function validateDropForm() {
@@ -67,6 +68,7 @@
 				} 
 				return false;
 			}
+			return true;
 
 		}
 	</script>
@@ -80,10 +82,10 @@
 
 	try {	
 		Class.forName("com.mysql.cj.jdbc.Driver"); //load driver
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_portal?autoReconnect=true&useSSL=false", "", "");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_portal?autoReconnect=true&useSSL=false", "root", "970630");
 		
 		Statement statement = con.createStatement();
-		String sqlSt = "SELECT user_id FROM users where username = '" + username +"';";
+		String sqlSt = "SELECT user_id FROM student_portal.users where username = '" + username +"';";
 		ResultSet rs = statement.executeQuery(sqlSt);
 		if (rs.next()){
 			String id = rs.getString(1);
@@ -97,13 +99,13 @@
 			
 			int id = Integer.parseInt(session.getAttribute("id").toString());
 
-			String selectInstructorClassSql = "SELECT * FROM teach WHERE class_id='" + classId + "' AND user_id='" + id + "';";
+			String selectInstructorClassSql = "SELECT * FROM student_portal.teach WHERE class_id='" + classId + "' AND user_id='" + id + "';";
 			rs = statement.executeQuery(selectInstructorClassSql);
 			if (rs.next()){ //means the instructor logged in teaches that class
-				String selectClassUserSql = "SELECT * FROM register WHERE class_id='" + classId + "' AND user_id='" + userId + "';";
+				String selectClassUserSql = "SELECT * FROM student_portal.register WHERE class_id='" + classId + "' AND user_id='" + userId + "';";
 				rs = statement.executeQuery(selectClassUserSql);
 				if (rs.next()){ //means the user is registered in that class
-					String hasGradeSql = "SELECT * FROM grade WHERE class_id='" + classId + "' AND user_id='" + userId + "';";
+					String hasGradeSql = "SELECT * FROM student_portal.grade WHERE class_id='" + classId + "' AND user_id='" + userId + "';";
 					rs = statement.executeQuery(hasGradeSql);
 					if (rs.next()){ // if there's already a grade (update it)
 						String sqlUpdateGradeStatement = "UPDATE `student_portal`.`grade` SET grade = '" + grade + "' WHERE user_id = '"
@@ -128,13 +130,19 @@
 			String userId = request.getParameter("IDForStudentToDrop");
 
 			int id = Integer.parseInt(session.getAttribute("id").toString());
-			String selectInstructorClassSql = "SELECT * FROM teach WHERE class_id='" + classId + "' AND user_id='" + id + "';";
+			String selectInstructorClassSql = "SELECT * FROM student_portal.teach WHERE class_id='" + classId + "' AND user_id='" + id + "';";
 			rs = statement.executeQuery(selectInstructorClassSql);
 			if (rs.next()){ //means the instructor logged in teaches that class
-				String selectClassUserSql = "SELECT * FROM register WHERE class_id='" + classId + "' AND user_id='" + userId + "';";
+				String selectClassUserSql = "SELECT * FROM student_portal.register WHERE class_id='" + classId + "' AND user_id='" + userId + "';";
 				rs = statement.executeQuery(selectClassUserSql);
 				if (rs.next()){ //means the user is registered in that class
-					statement.executeUpdate("DELETE FROM register WHERE (`user_id` = '" + userId + "' AND class_id = '" + classId + "');");					
+					statement.executeUpdate("DELETE FROM `student_portal`.`grade` WHERE (`user_id` = '" + userId + "' AND class_id = '" + classId + "');");					
+					statement.executeUpdate("DELETE FROM `student_portal`.`register` WHERE (`user_id` = '" + userId + "' AND class_id = '" + classId + "');");					
+					rs = statement.executeQuery("SELECT enrollment FROM classes WHERE class_id = '" + classId + "';");
+					rs.next();
+					int newEnrollment = rs.getInt(1) - 1;
+					statement.executeUpdate("UPDATE student_portal.classes SET enrollment = '"+newEnrollment+"' WHERE class_id= '"+classId+"';");
+
 				} else{
 					out.println("Student not found. Choose a different user id.");
 				}
@@ -156,6 +164,8 @@
 			response.sendRedirect("index.jsp"); 
 		}
 		%>
+
+		<button class ="profileButton" onclick="window.location.href='modifyProfile.jsp'">Profile</button>
 
 		<div class="instructor-home-title">
 			Welcome, Instructor <%=session.getAttribute("login")%>
@@ -189,7 +199,7 @@
 			</form>
 
 		</div>
-
+		<br>
 		<a href="logout.jsp">Logout</a>
 	</div>
 
