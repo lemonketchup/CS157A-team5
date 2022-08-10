@@ -18,12 +18,34 @@
 	
 } */
 
-.add-student-form {
+.add-user-form {
 	padding-top: 20px;	
 	color: white;
 }
 
 .delete-user-form {
+	padding-top: 20px;	
+	color: white;
+}
+
+.add-class-form {
+	padding-top: 20px;	
+	color: white;
+}
+.modify-class-form {
+	padding-top: 20px;	
+	color: white;
+}
+.delete-class-form {
+	padding-top: 20px;	
+	color: white;
+}
+
+.add-course-form {
+	padding-top: 20px;	
+	color: white;
+}
+.add-department-form {
 	padding-top: 20px;	
 	color: white;
 }
@@ -69,6 +91,31 @@ input, select, textarea {
    	padding: 8px;
 }
 
+.form4 input { 
+  	border: 0;
+   	padding: 8px;
+}
+
+.form5 input { 
+  	border: 0;
+   	padding: 8px;
+}
+
+.form6 input { 
+  	border: 0;
+   	padding: 8px;
+}
+
+.form7 input { 
+  	border: 0;
+   	padding: 8px;
+}
+
+.form8 input { 
+  	border: 0;
+   	padding: 8px;
+}
+
 .input[type=search] {
 	background-color: blue;
   	color: blue;
@@ -88,6 +135,24 @@ input[type=submit] {
   transition: all 0.3 ease;
   cursor: pointer;
 }
+
+
+.profileButton {
+	position:absolute;
+	right:2%;
+	outline: 0;
+	border: 0;
+	border-radius: 10%;	
+	width: 100px;
+	height: 40px;
+	background-color: #ff751a;
+	font-size: 16px;
+	color: white;
+} 
+
+.profileButton:hover {
+	background-color: #e65c00;
+} 
 
 
 
