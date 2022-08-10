@@ -14,25 +14,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css" type="text/css" >
+	<link rel="stylesheet" href="studentHome.css" type="text/css" >
 	<title>Welcome : <%=session.getAttribute("login")%></title>
 	
 	<style>
 	.buttonInput{
-	font-family: Helvetica, sans-serif;
-  /*text-transform: uppercase;*/
-  	outline: 0;
-  	background-image: linear-gradient(90deg,#FC0441,#F62DA8);
-  	width: 280px;
-  	height:50px;
-  	border: 0;
-  	padding: 15px;
-  	color: #FFFFFF;
-  	font-size: 20px;
-  	cursor: pointer;
-  	margin-top:20px;
-  	horizontal-align: center;
-}
+		font-family: Helvetica, sans-serif;
+	  /*text-transform: uppercase;*/
+	  	outline: 0;
+	  	background-image: linear-gradient(90deg,#FC0441,#F62DA8);
+	  	width: 280px;
+	  	height:50px;
+	  	border: 0;
+	  	padding: 15px;
+	  	color: #FFFFFF;
+	  	font-size: 20px;
+	  	cursor: pointer;
+	  	margin-top:20px;
+	  	horizontal-align: center;
+	}
 	
 	
 	
@@ -42,58 +42,56 @@
 </head>
 
 <body>
+	<%
+		if(session.getAttribute("login") == null || session.getAttribute("login")==" ") //check condition unauthorize user not direct access welcome.jsp page
+		{
+			response.sendRedirect("index.jsp"); 
+		}
+		%>
     <div class="student-home">
+			<button class ="profileButton" onclick="window.location.href='modifyProfile.jsp'">Profile</button>
 			
 			<div class="student-home-title">
 			    Welcome, STUDENT <%=session.getAttribute("login")%>
 			</div>
+			<br>
 			
-			<a href="logout.jsp">Logout</a>
     </div>
+    
+    
+    
 
 	
-	<div class="studentMain" style="width:100%; height:100% ; text-align:center">
+	<div>
 	 <form action = "MyClasses.jsp" >
-		<input class="buttonInput" type="submit" value = "view my classes" name = "button" onclick="window.location.href = 'MyClasses.jsp'">
+		<input class="buttonInput" type="submit" value = "View My Classes" name = "button" onclick="window.location.href = 'MyClasses.jsp'">
 	</form>
 	
 	<form action = "registerClass.jsp">
-	
-		<input  class="buttonInput" type="submit" value = "add a class" name ="button_add" onclick = "window.location.href = 'RegisterClass.jsp'">
+		<input  class="buttonInput" type="submit" value = "Add a Class" name ="button_add" onclick = "window.location.href = 'RegisterClass.jsp'">
 	</form>
 		
 	<form action = "dropClass.jsp">
-	
-	<input type= "submit" value = "drop a class" class= "buttonInput" onclick = "window.location.href='dropClass.jsp'"/> 
-	
-	
+		<input class="buttonInput" type= "submit" value = "Drop a Class" class= "buttonInput" onclick = "window.location.href='dropClass.jsp'"/> 
 	</form>
 	
-	<form action= "commentClass.jsp">
-	
-	
-	<input class= "buttonInput" type = "submit" value = "comment my classes" onclick = "window.location.href='commentClass.jsp'"/>
-	
-	
+	<form action= "commentClass.jsp">		
+		<input class= "buttonInput" type = "submit" value = "Comment On Class" onclick = "window.location.href='commentClass.jsp'"/>	
 	</form>
-	
 	
 	
 	<form action ="allClasses.jsp">
-	
-	<input class= "buttonInput" type = 'submit' value = "look Up classes" />
+		<input class= "buttonInput" type = 'submit' value = "Look Up Classes" />
 	</form>
-	
 	
 	
 	<form action="viewMyGrade.jsp">
-	<input class= "buttonInput"  type= 'submit' value = "view My grade">
-	
+		<input class= "buttonInput"  type= 'submit' value = "View My Grades">
 	</form>
 	
 	<form action= "shopCart.jsp">
-	</br></br>
-	<input class= "buttonInput" type='submit' value = "shopping cart(saved classes)">
+	
+	<input class= "buttonInput" type='submit' value = "Saved Classes">
 	</form>
 	
 	</div>
@@ -142,7 +140,8 @@
 	out.println("SQLException caught: " +e.getMessage()); } 
 	
 	%>
-	
+	<br>
+	<a href="logout.jsp">Logout</a>
 	
 	
 </body>
